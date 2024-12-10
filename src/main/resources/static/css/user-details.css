@@ -1,0 +1,72 @@
+ body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e3fdfd, #ffe6fa);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #444;
+        }
+
+        .user-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+
+        .user-details p, .user-details ul {
+            margin: 15px 0;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .user-details p span {
+            font-weight: bold;
+            color: #222;
+        }
+
+        .user-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .user-details ul li {
+            padding: 5px 0;
+            color: #555;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #b6f0e7, #ffb3f0);
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffb3f0, #b6f0e7);
+            transform: scale(1.05);
+            text-decoration: none;
+        }
+
+        .user-container ul {
+            margin-left: 15px;
+            list-style: circle;
+        }

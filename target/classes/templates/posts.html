@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home - All Posts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/posts.css}">
+</head>
+<body>
+<!-- Top Bar -->
+<div class="top-bar">
+    <div class="logo">
+        <img th:src="@{/images/logo.png}" alt="Reddit Logo" style="max-height: 60px; max-width: 60px;">
+    </div>
+    <div class="search-bar">
+        <form action="/subreddits/search" method="GET">
+            <i class="fas fa-search"></i>
+            <input
+                    type="text"
+                    placeholder="Search Reddit"
+                    id="search-input"
+                    name="query"
+                    required>
+            <button type="submit" id="search-btn">Search</button>
+        </form>
+    </div>
+    <div class="actions">
+        <a th:href="@{/reddit/post}" class="create-btn">Create</a>
+        <div class="top-bar">
+            <div class="profile-picture-container">
+                <img th:src="${profilePicture}" class="profile-picture" alt="Profile Picture"/>
+            </div>
+        </div>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Menu</h3>
+        <ul>
+            <li><a th:href="@{/reddit/posts}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a th:href="@{/reddit/popular}"><i class="fas fa-fire"></i> Popular</a></li>
+            <li><a th:href="@{/reddit/explore}"><i class="fas fa-compass"></i> Explore</a></li>
+            <li><a th:href="@{/reddit/latest}"><i class="fas fa-list"></i> Latest</a></li>
+        </ul>
+        <hr>
+        <h3>Moderation</h3>
+        <ul>
+            <!-- Loop through createdByUser list and display subreddit names with /r prefix -->
+            <ul class="community-list" th:if="${joinedByUser != null}">
+            <li th:each="subreddit : ${createdByUser}">
+                <a th:href="@{/subreddits/details/{id}(id=${subreddit.id})}">
+                    <i class="fas fa-sitemap"></i> r/ <span th:text="${subreddit.name}">Subreddit Name</span>
+                </a>
+            </li>
+            </ul>
+        </ul>
+        <hr>
+        <h3>Communities</h3>
+        <a th:href="@{/subreddits/new}" class="create-post">Create Community</a>
+        <!-- Display Subreddits -->
+        <ul class="community-list" th:if="${joinedByUser != null}">
+            <li th:each="subreddit : ${joinedByUser}">
+                <a th:href="@{/subreddits/details/{id}(id=${subreddit.id})}"
+                   th:text="'r/' + ${subreddit.name}"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="posts">
+        <h1>All Posts</h1>
+        <div th:if="${posts != null && posts.size() > 0}">
+            <div th:each="post : ${posts}" class="post">
+                <div class="post-content">
+                    <div class="subreddit-name" th:if="${post.subreddit != null}">
+                        <form th:action="@{/subreddits/details/{id}(id=${post.subreddit.id})}" method="get" style="display: inline;">
+                            <a href="#" onclick="this.closest('form').submit();" class="text-link" th:text="'r/' + ${post.subreddit.name}">Subreddit Name</a>
+                        </form>
+                    </div>
+
+                    <h2 th:text="${post.title}">Post Title</h2>
+                    <p th:utext="${post.content}">Post Content...</p>
+                    <div th:if="${post.image != null}">
+                        <img th:src="${post.image}" alt="Post Image" class="post-image">
+                    </div>
+                    <div>
+                        <video th:if="${post.video != null}" th:src="${post.video}" controls>
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="post-details">
+                        <p th:text="'Posted by ' + ${post.createdBy.username} + ' | ' + ${post.createdAt}">
+                            Details...
+                        </p>
+                    </div>
+                    <!-- Add the View Post button -->
+                    <form th:action="@{/reddit/post/{postId}(postId=${post.id})}" method="get" style="display: inline;">
+                        <button type="submit" class="view-post-btn">View Post</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div th:if="${posts == null || posts.size() == 0}">
+            <p>No posts available.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Post</title>
+    <!-- TinyMCE Script -->
+    <script src="https://cdn.tiny.cloud/1/8qgxwhvw1hdt4y2q2phseeoimpwfqksbgxsgt07choa59p7z/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#content',
+            plugins: 'advlist autolink link image lists charmap preview anchor',
+            toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            menubar: false,
+            height: 300,
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save(); // Sync TinyMCE content to the textarea
+                });
+            }
+        });
+    </script>
+    <link rel="stylesheet" th:href="@{/css/update-post.css}">
+</head>
+<body>
+<div>
+    <h1>Create a New Post</h1>
+    <form th:action="@{/reddit/edit/{postId}(postId=${post.id})}" method="post" enctype="multipart/form-data">
+
+
+        <div class="form-group">
+            <label for="currentImage">Current Image</label>
+            <img th:if="${post.image}" th:src="${post.image}" class="img-thumbnail" width="200" id="currentImage">
+            <p th:unless="${post.image}">No image uploaded</p>
+        </div>
+
+        <div class="form-group">
+            <label for="imageFile">Update Image</label>
+            <input type="file" class="form-control-file" id="imageFile" name="imageFile" accept="image/*">
+        </div>
+        <!-- Current Video Section -->
+        <div class="form-group">
+            <label for="currentVideo">Current Video</label>
+            <video th:if="${post.video}" controls width="320" id="currentVideo">
+                <source th:src="${post.video}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p th:unless="${post.video}">No video uploaded</p>
+        </div>
+
+        <!-- Update Video Section -->
+        <div class="form-group">
+            <label for="videoFile">Update Video</label>
+            <input type="file" class="form-control-file" id="videoFile" name="videoFile" accept="video/*">
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" th:value="${post.title}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" th:text="${post.content}" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="subreddit">Select Subreddit:</label>
+            <select id="subreddit" name="subredditId" required>
+                <option value="" disabled selected>Select a subreddit</option>
+                <option th:each="subreddit : ${subreddits}"
+                        th:value="${subreddit.id}"
+                        th:text="${subreddit.name}">
+                </option>
+            </select>
+        </div>
+        <button type="submit">Update Post</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Details</title>
+    <link rel="stylesheet" th:href="@{/css/user-details.css}">
+</head>
+<body>
+<div class="user-container">
+    <h1>User Details</h1>
+    <div class="user-details">
+        <p><span>ID:</span> <span th:text="${user.id}">123</span></p>
+        <p><span>Name:</span> <span th:text="${user.username}">John Doe</span></p>
+        <p><span>Email:</span> <span th:text="${user.email}">johndoe@example.com</span></p>
+        <p><span>Roles:</span></p>
+        <ul>
+            <li th:each="role : ${user.roles}" th:text="${role}">Admin</li>
+        </ul>
+        <p><span>Joined At:</span> <span th:text="${user.createdAt}">2024-01-01</span></p>
+    </div>
+    <a href="/reddit/posts" class="back-button">Back</a>
+</div>
+</body>
+</html>

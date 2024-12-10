@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/post-view.css}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="post-container">
+    <h2 th:text="${post.title}">Post Title</h2>
+    <p th:utext="${post.content}">Post Content</p>
+    <div th:if="${post.image != null}">
+        <img th:src="${post.image}" alt="Post Image">
+    </div>
+    <div>
+        <video th:if="${post.video != null}" th:src="${post.video}" controls>
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
+</body>
+</html>

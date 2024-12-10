@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Subreddit</title>
+    <script>
+        function validateGenres(event) {
+            const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
+            const selectedGenres = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+
+            if (selectedGenres < 1) {
+                alert('Please select at least one genre.');
+                event.preventDefault(); // Prevent form submission
+            } else if (selectedGenres > 3) {
+                alert('Please select no more than three genres.');
+                event.preventDefault(); // Prevent form submission
+            }
+        }
+    </script>
+    <link rel="stylesheet" th:href="@{/css/update-subreddit.css}">
+</head>
+<body>
+<div class="form-container">
+    <h1>Update Subreddit</h1>
+    <form th:action="@{/subreddits/{id}(id=${subreddit.id})}" th:object="${subreddit}" method="post" onsubmit="validateGenres(event)">
+        <label for="name">Subreddit Name:</label>
+        <input type="text" id="name" name="name" th:field="*{name}" placeholder="Enter the subreddit name" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" th:field="*{description}" placeholder="Describe your subreddit"></textarea>
+
+        <label>Genre (select at least 1 and no more than 3):</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="genre" value="Technology"> Technology</label>
+            <label><input type="checkbox" name="genre" value="Music"> Music</label>
+            <label><input type="checkbox" name="genre" value="Gaming"> Gaming</label>
+            <label><input type="checkbox" name="genre" value="Sports"> Sports</label>
+            <label><input type="checkbox" name="genre" value="Movies"> Movies</label>
+            <label><input type="checkbox" name="genre" value="Fashion"> Fashion</label>
+            <label><input type="checkbox" name="genre" value="Science"> Science</label>
+        </div>
+
+        <button type="submit">Update Subreddit</button>
+    </form>
+    <div class="form-footer">
+        <p>Your subreddit will be updated once approved!</p>
+    </div>
+</div>
+</body>
+</html>

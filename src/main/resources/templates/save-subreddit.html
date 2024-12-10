@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Save Subreddit</title>
+    <link rel="stylesheet" th:href="@{/css/save-subreddit.css}">
+
+    <script>
+        function validateSelection() {
+            const checkboxes = document.querySelectorAll('.genre-checkbox');
+            const selectedGenres = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+            if (selectedGenres.length > 3) {
+                alert("You can only select up to 3 genres.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+<div class="form-container">
+    <h1>Create a New Subreddit</h1>
+    <form th:action="@{/subreddits}" th:object="${subreddit}" method="post" onsubmit="return validateSelection()">
+        <label for="name">Subreddit Name:</label>
+        <input type="text" id="name" name="name" th:field="*{name}" placeholder="Enter the subreddit name" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" th:field="*{description}" placeholder="Describe your subreddit"></textarea>
+
+        <label>Genre (select up to 3):</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" class="genre-checkbox" name="genre" value="Technology"> Technology</label>
+            <label><input type="checkbox" class="genre-checkbox" name="genre" value="Music"> Music</label>
+            <label><input type="checkbox" class="genre-checkbox" name="genre" value="Gaming"> Gaming</label>
+            <label><input type="checkbox" class="genre-checkbox" name="genre" value="Sports"> Sports</label>
+            <label><input type="checkbox" class="genre-checkbox" name="genre" value="Movies"> Movies</label>
+            <label><input type="checkbox" class="genre-checkbox" name="genre" value="Fashion"> Fashion</label>
+            <label><input type="checkbox" class="genre-checkbox" name="genre" value="Science"> Science</label>
+        </div>
+
+        <button type="submit">Save Subreddit</button>
+    </form>
+    <div class="form-footer">
+        <p>Your subreddit will go live once approved!</p>
+    </div>
+</div>
+</body>
+</html>

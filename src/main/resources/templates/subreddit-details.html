@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Subreddit Details</title>
+  <link rel="stylesheet" th:href="@{/css/subreddit-details.css}">
+</head>
+<body>
+<div class="container">
+  <h1>Subreddit: <span th:text="${subreddit.name}"></span></h1>
+
+  <div class="details">
+    <strong>Created At:</strong> <span th:text="${#dates.format(subreddit.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+  </div>
+  <div class="details">
+    <strong>Description:</strong> <span th:text="${subreddit.description}"></span>
+  </div>
+  <div class="details created-by">
+    <strong>Created By:</strong> <span th:text="${subreddit.createdBy.username}"></span>
+  </div>
+  <div class="details">
+    <form th:action="@{/subreddits/join/{id}(id=${subreddit.id})}"
+          method="post"
+          style="display: inline;"
+          th:if="${!isJoined}">
+      <button type="submit" class="join-button">Join</button>
+    </form>
+
+    <form th:action="@{/subreddits/exit/{subredditId}(subredditId=${subreddit.id})}"
+          method="post"
+          style="display: inline;"
+          th:if="${isJoined}">
+      <button type="submit" class="join-button">Exit</button>
+    </form>
+
+  </div>
+  <div th:if="${#authentication.name == subreddit.createdBy.email}">
+    <!-- Edit Button -->
+    <a th:href="@{/subreddits/edit/{id}(id=${subreddit.id})}" class="btn btn-primary">Edit</a>
+    <a th:href="@{/subreddits/control/{id}(id=${subreddit.id})}" class="btn btn-primary">Archived posts</a>
+  </div>
+  <!-- Posts Section -->
+  <div class="posts-list">
+    <h2>Posts in this Subreddit</h2>
+    <div th:if="${posts != null and posts.size() > 0}">
+      <div th:each="post : ${posts}" class="post-item">
+        <div>
+          <a th:href="@{/reddit/post/{postId}(postId=${post.id})}" th:text="${post.title}"></a>
+          <div class="post-details">
+            <span th:text="'on ' + ${#dates.format(post.createdAt, 'yyyy-MM-dd')}" class="post-date"></span>
+          </div>
+        </div>
+        <div>
+          <!-- Archive Button -->
+          <form th:if="${#authentication.name == subreddit.createdBy.email}"
+                th:action="@{/reddit/archive/{postId}(postId=${post.id})}"
+                method="post"
+                style="display: inline;">
+            <button type="submit" class="archive-btn">Archive</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div th:if="${posts == null or posts.size() == 0}">
+      <p>No posts found in this subreddit.</p>
+    </div>
+  </div>
+
+  <a class="back-button" th:href="@{/reddit/posts}">Back to Subreddit List</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Post</title>
+    <link rel="stylesheet" th:href="@{/css/post-view.css}">
+</head>
+<body>
+<div class="post-container">
+    <h2 th:text="${post.title}">Post Title</h2>
+    <p th:utext="${post.content}">Post Content</p>
+    <div th:if="${post.image != null}">
+        <img th:src="${post.image}" alt="Post Image">
+    </div>
+    <div>
+        <video th:if="${post.video != null}" th:src="${post.video}" controls>
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="action-buttons">
+        <a th:href="@{/reddit/vote/{postId}(postId=${post.id})}">
+            <button type="button">Upvote</button>
+        </a>
+        <span class="vote-count" th:text="${countedVotes}">0</span>
+        <a th:href="@{/reddit/dvote/{postId}(postId=${post.id})}">
+            <button type="button">Downvote</button>
+        </a>
+    </div>
+
+    <!-- Comment Section -->
+    <div class="comment-section">
+        <h3>Comments</h3>
+
+        <!-- Recursive Comment Display -->
+        <div th:each="comment : ${post.comments}" class="comment-box">
+            <p><strong th:text="${comment.createdBy}">User</strong>:</p>
+            <p th:text="${comment.content}">Comment content...</p>
+
+            <!-- Reply Form -->
+            <div class="reply-box">
+                <form th:action="@{/reddit/reply/{commentId}(commentId=${comment.id})}" method="post">
+                    <textarea name="replyContent" rows="2" placeholder="Reply to this comment..." required></textarea><br><br>
+                    <input type="hidden" name="postId" th:value="${post.id}" />
+                    <button type="submit">Reply</button>
+                </form>
+            </div>
+            <form th:if="${#authentication.name == comment.createdBy}"
+                  th:action="@{/reddit/comment/{commentId}(commentId=${comment.id})}"
+                  method="post"
+                  onsubmit="return confirm('Are you sure you want to delete this comment?');"
+                  style="display: inline;">
+                <input type="hidden" name="_method" value="delete" />
+                <input type="hidden" name="postId" th:value="${post.id}" />
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+
+            <!-- Nested Comments -->
+            <div class="nested-comments" th:if="${comment.childComments != null}">
+                <div th:each="childComment : ${comment.childComments}" class="comment-box">
+                    <p><strong th:text="${childComment.createdBy}">User</strong>:</p>
+                    <p th:text="${childComment.content}">Reply content...</p>
+
+                    <!-- Reply Form for Nested Comments -->
+                    <div class="reply-box">
+                        <form th:action="@{/reddit/reply/{commentId}(commentId=${childComment.id})}" method="post">
+                            <textarea name="replyContent" rows="2" placeholder="Reply to this comment..." required></textarea><br><br>
+                            <input type="hidden" name="postId" th:value="${post.id}" />
+                            <button type="submit">Reply</button>
+                        </form>
+                        <form th:if="${#authentication.name == comment.createdBy}"
+                              th:action="@{/reddit/comment/{commentId}(commentId=${childComment.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this comment?');" style="display: inline;">
+                            <input type="hidden" name="_method" value="delete" />
+                            <input type="hidden" name="postId" th:value="${post.id}" />
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add a New Comment -->
+        <div class="new-comment-box">
+            <h3>Add a Comment</h3>
+            <form th:action="@{/reddit/comment/{postId}(postId=${post.id})}" method="post">
+                <textarea name="comment" rows="3" placeholder="Write your comment here..." required></textarea><br><br>
+                <button type="submit">Post Comment</button>
+            </form>
+        </div>
+    </div>
+</div>
+<a th:href="@{/reddit/edit/{postId}(postId=${post.id})}" class="edit-btn">
+    Edit
+</a>
+<form th:action="@{/reddit/post/{postId}(postId=${post.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this post?');">
+    <input type="hidden" name="_method" value="delete" />
+    <button type="submit" class="delete-btn">Delete</button>
+</form>
+<a href="/reddit/posts">Back to Home</a>
+</body>
+</html>

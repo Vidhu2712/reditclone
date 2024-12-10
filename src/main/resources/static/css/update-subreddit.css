@@ -1,0 +1,81 @@
+body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #89CFF0, #FFD1DC);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px 40px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .form-container h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        .checkbox-group {
+            text-align: left;
+            margin: 10px 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        button {
+            background: linear-gradient(90deg, #007BFF, #0056b3);
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #0056b3, #003d73);
+        }
+
+        .form-footer {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+        }

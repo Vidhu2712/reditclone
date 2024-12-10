@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts</title>
+    <link rel="stylesheet" th:href="@{/css/subreddit-posts.css}">
+</head>
+<body>
+<h1>All Posts</h1>
+<div id="posts">
+    <!-- Loop through posts -->
+    <div class="post-container" th:each="post : ${posts}">
+        <div class="post-title" th:text="${post.title}">Sample Title</div>
+        <div class="post-content" th:utext="${post.content}">Sample Content</div>
+        <div class="post-status">
+            Published: <span th:text="${post.published ? 'Yes' : 'No'}">No</span>
+        </div>
+        <div class="post-details">
+            <p th:text="'Posted by ' + ${post.createdBy.username} + ' | ' + ${post.createdAt}">
+                Details...</p>
+        </div>
+
+        <!-- Activate Post Form -->
+        <form th:action="@{/reddit/active/{postId}(postId=${post.id})}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-primary">Activate Post</button>
+        </form>
+
+        <!-- Redirect to Post Button -->
+        <a th:href="@{/reddit/postArchieve/{postId}(postId=${post.id})}" class="btn btn-secondary">
+            View Post
+        </a>
+    </div>
+
+</div>
+</body>
+</html>

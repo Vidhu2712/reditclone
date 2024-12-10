@@ -1,0 +1,182 @@
+body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+      color: #333;
+  }
+
+  /* Heading Styles */
+  h1, h3 {
+      text-align: center;
+      color: #333; /* Darkened color for better visibility */
+      font-family: 'Roboto', sans-serif;
+      font-weight: 600;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Adding a subtle text shadow */
+  }
+
+  /* General Text Styling */
+  p, li, strong {
+      color: #444; /* Darker text color for readability */
+  }
+
+  /* Post Container Styling */
+  .post-container {
+      border: 1px solid #ddd;
+      padding: 25px;
+      margin: 20px auto;
+      max-width: 700px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease; /* Smooth transition on hover */
+  }
+
+  .post-container:hover {
+      transform: translateY(-10px); /* Subtle lift on hover */
+  }
+
+  .post-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 15px 0;
+  }
+
+  /* Action Buttons Styling */
+  .action-buttons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 20px;
+      margin-top: 20px;
+  }
+
+  .vote-count {
+      font-weight: bold;
+      font-size: 18px;
+      color: #444;
+  }
+
+  .action-buttons button {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+
+  .action-buttons button:hover {
+      background-color: #0056b3;
+  }
+
+  /* Comment Section Styling */
+  .comment-section {
+      margin-top: 40px;
+  }
+
+  .comment-box {
+      margin-top: 25px;
+      padding: 18px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #f7f7f7;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .comment-box strong {
+      font-size: 16px;
+      color: #333;
+  }
+
+  .comment-box p {
+      margin: 5px 0;
+      color: #555;
+  }
+
+  /* Reply Box Styling */
+  .reply-box textarea {
+      width: 100%;
+      font-size: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background-color: #fafafa;
+      resize: none;
+      transition: border-color 0.3s ease;
+  }
+
+  .reply-box textarea:focus {
+      border-color: #007bff;
+  }
+
+  /* Nested Comments Styling */
+  .nested-comments {
+      margin-left: 40px;
+      margin-top: 15px;
+  }
+
+  /* New Comment Box Styling */
+  .new-comment-box {
+      margin-top: 40px;
+      padding: 18px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .new-comment-box textarea {
+      width: 100%;
+      font-size: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background-color: #fafafa;
+      resize: none;
+      transition: border-color 0.3s ease;
+  }
+
+  .new-comment-box textarea:focus {
+      border-color: #007bff;
+  }
+
+  /* Button Styling */
+  button {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+      background-color: #0056b3;
+  }
+
+  /* Link Styling */
+  a {
+      display: block;
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+  }
+
+  a:hover {
+      color: #ff7e5f;
+      text-decoration: underline;
+  }
+
+  /* Adding smooth scrolling */
+  html {
+      scroll-behavior: smooth;
+  }

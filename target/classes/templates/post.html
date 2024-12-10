@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Post</title>
+    <!-- TinyMCE Script -->
+    <script src="https://cdn.tiny.cloud/1/8qgxwhvw1hdt4y2q2phseeoimpwfqksbgxsgt07choa59p7z/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#content',
+            plugins: 'advlist autolink link image lists charmap preview anchor',
+            toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            menubar: false,
+            height: 300,
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save(); // Sync TinyMCE content to the textarea
+                });
+            }
+        });
+    </script>
+    <link rel="stylesheet" th:href="@{/css/post.css}">
+</head>
+<body>
+<div>
+    <h1>Create a New Post</h1>
+    <form th:action="@{/reddit/post}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" th:value="${post.title}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" th:text="${post.content}" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="subreddit">Select Subreddit:</label>
+            <select id="subreddit" name="subredditId" >
+                <option value="" disabled selected>Select a subreddit</option>
+                <option th:each="subreddit : ${subreddits}"
+                        th:value="${subreddit.id}"
+                        th:text="${subreddit.name}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="file-input-label" for="postImage">Image:</label>
+            <input type="file" id="postImage" name="postImage" accept="image/*">
+        </div>
+        <div>
+            <label for="video">Video:</label>
+            <input type="file" id="video" name="postVideo" accept="video/*"><br><br>
+        </div>
+
+        <button type="submit">Create Post</button>
+    </form>
+</div>
+</body>
+</html>

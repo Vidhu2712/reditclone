@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet" th:href="@{/css/search-results.css}">
+
+</head>
+<body>
+<div class="container">
+    <h1>Search Results for: <span th:text="${keyword}"></span></h1>
+
+    <!-- Subreddits Section -->
+    <h2>Subreddits</h2>
+    <div th:if="${subreddits != null and subreddits.size() > 0}">
+        <ul>
+            <li th:each="subreddit : ${subreddits}">
+                <a th:href="@{/subreddits/details/{id}(id=${subreddit.id})}" th:text="${subreddit.name}"></a>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${subreddits == null or subreddits.size() == 0}">
+        <p class="no-results">No subreddits found.</p>
+    </div>
+
+    <!-- Posts Section -->
+    <h2>Posts</h2>
+    <div th:if="${posts != null and posts.size() > 0}">
+        <ul>
+            <li th:each="post : ${posts}">
+                <a th:href="@{/reddit/post/{id}(id=${post.id})}" th:text="${post.title}"></a>
+                <span class="username" th:text="'by ' + ${post.createdBy.username}"></span>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${posts == null or posts.size() == 0}">
+        <p class="no-results">No posts found.</p>
+    </div>
+
+    <!-- Users Section -->
+    <h2>Users</h2>
+    <div th:if="${users != null and users.size() > 0}">
+        <ul>
+            <li th:each="user : ${users}">
+                <a th:href="@{/reddit/userDetails/{id}(id=${user.id})}" th:text="${user.username}"></a>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${users == null or users.size() == 0}">
+        <p class="no-results">No users found.</p>
+    </div>
+</div>
+</body>
+</html>
